@@ -1,0 +1,46 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Smart Home Energy Monitor</title>
+    <link rel="stylesheet" href="style.css">
+    <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/axios/dist/axios.min.js"></script>
+</head>
+<body>
+    <h1>Smart Home Energy Monitor</h1>
+    
+    <div class="metrics">
+        <p><strong>Temperature:</strong> <span id="temp">--</span> °C</p>
+        <p><strong>Humidity:</strong> <span id="humidity">--</span> %</p>
+        <p><strong>Voltage:</strong> <span id="voltage">--</span> V</p>
+        <p><strong>Current:</strong> <span id="current">--</span> A</p>
+        <p><strong>Power:</strong> <span id="power">--</span> W</p>
+        <p><strong>Status:</strong> <span id="status">--</span></p>
+    </div>
+
+    <div class="charts">
+        <div><canvas id="tempChart"></canvas></div>
+        <div><canvas id="powerChart"></canvas></div>
+        <div><canvas id="voltageChart"></canvas></div>
+    </div>
+
+    <h2>Recent Readings</h2>
+    <table>
+        <thead>
+            <tr>
+                <th>Timestamp</th>
+                <th>Temp (°C)</th>
+                <th>Humidity (%)</th>
+                <th>Voltage (V)</th>
+                <th>Current (A)</th>
+                <th>Power (W)</th>
+                <th>Status</th>
+            </tr>
+        </thead>
+        <tbody id="table-body"></tbody>
+    </table>
+
+    <script src="main.js"></script>
+</body>
+</html>

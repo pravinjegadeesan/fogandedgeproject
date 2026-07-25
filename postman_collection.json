@@ -1,0 +1,91 @@
+{
+	"info": {
+		"name": "Smart Home Energy Monitor API",
+		"schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json"
+	},
+	"item": [
+		{
+			"name": "POST Aggregated Energy Reading",
+			"request": {
+				"method": "POST",
+				"header": [
+					{
+						"key": "Content-Type",
+						"value": "application/json",
+						"type": "text"
+					}
+				],
+				"body": {
+					"mode": "raw",
+					"raw": "{\n  \"timestamp\": \"2026-07-25T19:30:00Z\",\n  \"temperature\": 24.5,\n  \"humidity\": 55.2,\n  \"voltage\": 230.4,\n  \"current\": 12.5,\n  \"power\": 2880.0,\n  \"status\": \"Normal\"\n}"
+				},
+				"url": {
+					"raw": "{{api_url}}/energy",
+					"host": [
+						"{{api_url}}"
+					],
+					"path": [
+						"energy"
+					]
+				},
+				"description": "POST request sending a consolidated payload from the Fog Node to the AWS API Gateway (integrated with Amazon SQS)."
+			},
+			"response": [
+				{
+					"name": "Expected POST Response",
+					"status": "OK",
+					"code": 200,
+					"_postman_previewlanguage": "json",
+					"header": [
+						{
+							"key": "Content-Type",
+							"value": "application/json"
+						}
+					],
+					"cookie": [],
+					"body": "{\n  \"message\": \"Enqueued successfully\"\n}"
+				}
+			]
+		},
+		{
+			"name": "GET Historical Energy Readings",
+			"request": {
+				"method": "GET",
+				"header": [],
+				"url": {
+					"raw": "{{api_url}}/energy",
+					"host": [
+						"{{api_url}}"
+					],
+					"path": [
+						"energy"
+					]
+				},
+				"description": "GET request to query the AWS API Gateway which triggers AWS Lambda to fetch recent records from Amazon DynamoDB."
+			},
+			"response": [
+				{
+					"name": "Expected GET Response",
+					"status": "OK",
+					"code": 200,
+					"_postman_previewlanguage": "json",
+					"header": [
+						{
+							"key": "Content-Type",
+							"value": "application/json"
+						}
+					],
+					"cookie": [],
+					"body": "[\n  {\n    \"id\": \"e9a4f4d2-7c5b-4c5e-85a2-c7f7173e6a2b\",\n    \"timestamp\": \"2026-07-25T19:30:00Z\",\n    \"temperature\": 24.5,\n    \"humidity\": 55.2,\n    \"voltage\": 230.4,\n    \"current\": 12.5,\n    \"power\": 2880.0,\n    \"status\": \"Normal\"\n  }\n]"
+				}
+			]
+		}
+	],
+	"variable": [
+		{
+			"key": "api_url",
+			"value": "https://CHANGE_ME.execute-api.us-east-1.amazonaws.com/prod",
+			"type": "string"
+		}
+	]
+}

@@ -1,0 +1,86 @@
+{
+  "swagger": "2.0",
+  "info": {
+    "title": "Smart Home Energy API"
+  },
+  "paths": {
+    "/energy": {
+      "options": {
+        "summary": "CORS support",
+        "responses": {
+          "200": {
+            "description": "Default response returning CORS headers",
+            "headers": {
+              "Access-Control-Allow-Headers": { "type": "string" },
+              "Access-Control-Allow-Methods": { "type": "string" },
+              "Access-Control-Allow-Origin": { "type": "string" }
+            }
+          }
+        },
+        "x-amazon-apigateway-integration": {
+          "type": "mock",
+          "requestTemplates": {
+            "application/json": "{\"statusCode\": 200}"
+          },
+          "responses": {
+            "default": {
+              "statusCode": "200",
+              "responseParameters": {
+                "method.response.header.Access-Control-Allow-Headers": "'Content-Type,X-Amz-Date,Authorization,X-Api-Key,X-Amz-Security-Token'",
+                "method.response.header.Access-Control-Allow-Methods": "'GET,POST,OPTIONS'",
+                "method.response.header.Access-Control-Allow-Origin": "'*'"
+              }
+            }
+          }
+        }
+      },
+      "post": {
+        "summary": "Push data to SQS",
+        "responses": {
+          "200": {
+            "description": "Data received",
+            "headers": {
+              "Access-Control-Allow-Origin": { "type": "string" }
+            }
+          }
+        },
+        "x-amazon-apigateway-integration": {
+          "credentials": "arn:aws:iam::ACCOUNT_ID:role/LabRole",
+          "uri": "arn:aws:apigateway:REGION:sqs:path/ACCOUNT_ID/SmartHomeEnergyQueue",
+          "httpMethod": "POST",
+          "type": "aws",
+          "requestParameters": {
+            "integration.request.header.Content-Type": "'application/x-www-form-urlencoded'"
+          },
+          "requestTemplates": {
+            "application/json": "Action=SendMessage&MessageBody=$util.urlEncode($input.body)"
+          },
+          "responses": {
+            "default": {
+              "statusCode": "200",
+              "responseTemplates": {
+                "application/json": "{\"message\": \"Enqueued successfully\"}"
+              },
+              "responseParameters": {
+                "method.response.header.Access-Control-Allow-Origin": "'*'"
+              }
+            }
+          }
+        }
+      },
+      "get": {
+        "summary": "Get all data",
+        "responses": {
+          "200": {
+            "description": "Query results"
+          }
+        },
+        "x-amazon-apigateway-integration": {
+          "uri": "arn:aws:apigateway:REGION:lambda:path/2015-03-31/functions/arn:aws:lambda:REGION:ACCOUNT_ID:function:SmartHomeEnergyGet/invocations",
+          "httpMethod": "POST",
+          "type": "aws_proxy"
+        }
+      }
+    }
+  }
+}

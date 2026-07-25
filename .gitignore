@@ -1,0 +1,23 @@
+# Excluded automation/local script files (requested)
+recreate_all.sh
+run_sensors.sh
+deploy_aws.sh
+deploy_eb.sh
+
+# Excluded documentation files (requested)
+README.md
+readme.md
+
+# Python compilation cache files
+__pycache__/
+*.pyc
+*.pyo
+*.pyd
+
+# Build and temporary files
+*.zip
+backend/api_definition.json
+
+# Operating system files
+.DS_Store
+Thumbs.db
