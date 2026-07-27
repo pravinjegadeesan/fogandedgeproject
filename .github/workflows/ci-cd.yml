@@ -47,7 +47,27 @@ jobs:
         aws-session-token: ${{ secrets.AWS_SESSION_TOKEN }}
         aws-region: ${{ secrets.AWS_DEFAULT_REGION || 'us-east-1' }}
 
-    - name: Run deploy scripts
+    - name: Deploy Lambda functions
       run: |
-        chmod +x recreate_all.sh deploy_aws.sh deploy_eb.sh
-        ./recreate_all.sh
+        zip -j lambda_ingest.zip backend/lambda_ingest.py
+        aws lambda update-function-code --function-name SmartHomeEnergyIngest --zip-file fileb://lambda_ingest.zip
+        
+        zip -j lambda_get.zip backend/lambda_get.py
+        aws lambda update-function-code --function-name SmartHomeEnergyGet --zip-file fileb://lambda_get.zip
+
+    - name: Deploy Fog Node to Elastic Beanstalk
+      run: |
+        zip -r fog_node.zip application.py requirements.txt fog/ frontend/
+        ACCOUNT_ID=$(aws sts get-caller-identity --query Account --output text)
+        BUCKET_NAME="smarthomeenergyfog-bucket-${ACCOUNT_ID}"
+        aws s3 cp fog_node.zip "s3://$BUCKET_NAME/fog_node.zip"
+        
+        VERSION_LABEL="git-${{ github.sha }}"
+        aws elasticbeanstalk create-application-version \
+            --application-name SmartHomeEnergyFog \
+            --version-label "$VERSION_LABEL" \
+            --source-bundle "S3Bucket=$BUCKET_NAME,S3Key=fog_node.zip"
+            
+        aws elasticbeanstalk update-environment \
+            --environment-name SmartHomeEnergyFog-env \
+            --version-label "$VERSION_LABEL"
