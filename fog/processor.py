@@ -51,7 +51,7 @@ def add_reading(sensor_type, value):
         status = "High Energy Consumption" if avg_power > 3500 else "Normal"
         
         payload = {
-            "timestamp": datetime.datetime.utcnow().isoformat() + "Z",
+            "timestamp": datetime.datetime.now(datetime.timezone.utc).isoformat().replace("+00:00", "Z"),
             "temperature": latest_temp,
             "humidity": latest_humidity,
             "voltage": avg_voltage,

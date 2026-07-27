@@ -1,7 +1,8 @@
 import json
-import boto3
 import os
 from decimal import Decimal
+
+import boto3
 
 dynamodb = boto3.resource('dynamodb')
 TABLE_NAME = os.environ.get('TABLE_NAME', 'SmartHomeEnergyData')
@@ -37,7 +38,7 @@ def lambda_handler(event, context):
             },
             'body': json.dumps(serializable_items)
         }
-    except Exception as error:
+    except Exception as error:  # noqa: BLE001
         return {
             'statusCode': 500,
             'headers': {

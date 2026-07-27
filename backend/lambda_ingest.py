@@ -1,8 +1,9 @@
 import json
-import boto3
 import os
 import uuid
 from decimal import Decimal
+
+import boto3
 
 dynamodb = boto3.resource('dynamodb')
 TABLE_NAME = os.environ.get('TABLE_NAME', 'SmartHomeEnergyData')

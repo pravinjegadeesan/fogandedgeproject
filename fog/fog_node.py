@@ -1,8 +1,9 @@
-from flask import Flask, request, jsonify
-import requests
-import processor
-
 import os
+
+import processor
+import requests
+from flask import Flask, jsonify, request
+
 frontend_dir = os.path.abspath(os.path.join(os.path.dirname(__file__), '..', 'frontend'))
 app = Flask(__name__, static_folder=frontend_dir, static_url_path='')
 

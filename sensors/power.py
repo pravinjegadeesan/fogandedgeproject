@@ -1,5 +1,6 @@
 import random
 import time
+
 import requests
 
 FOG_NODE_URL = "http://awseb-e-p-AWSEBLoa-IW5SKUJPCTP1-932418002.us-east-1.elb.amazonaws.com/sensor"
