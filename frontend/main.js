@@ -1,4 +1,4 @@
-const API_URL = "https://o3g9wp3ss2.execute-api.us-east-1.amazonaws.com/prod/energy";
+const API_URL = "https://9xtw9d8g5m.execute-api.us-east-1.amazonaws.com/prod/energy";
 
 const chartOptions = {
     responsive: true,

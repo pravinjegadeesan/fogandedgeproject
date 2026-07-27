@@ -6,7 +6,7 @@ import os
 frontend_dir = os.path.abspath(os.path.join(os.path.dirname(__file__), '..', 'frontend'))
 app = Flask(__name__, static_folder=frontend_dir, static_url_path='')
 
-CLOUD_ENDPOINT = "https://o3g9wp3ss2.execute-api.us-east-1.amazonaws.com/prod/energy"
+CLOUD_ENDPOINT = "https://9xtw9d8g5m.execute-api.us-east-1.amazonaws.com/prod/energy"
 
 @app.route('/sensor', methods=['POST'])
 def receive_sensor_data():
