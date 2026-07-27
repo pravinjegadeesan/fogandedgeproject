@@ -59,11 +59,8 @@ def add_reading(sensor_type, value):
             "power": avg_power,
             "status": status
         }
-        
         del voltage_buffer[:5]
         del current_buffer[:5]
         del power_buffer[:5]
-        
         return payload
-        
     return None
