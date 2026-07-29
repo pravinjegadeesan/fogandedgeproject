@@ -4,7 +4,7 @@ import time
 import requests
 
 FOG_NODE_URL = "http://awseb-e-p-AWSEBLoa-IW5SKUJPCTP1-932418002.us-east-1.elb.amazonaws.com/sensor"
-SEND_INTERVAL_SECONDS = 3
+SEND_INTERVAL_SECONDS = 10
 MIN_TEMP = 18.0
 MAX_TEMP = 35.0
 

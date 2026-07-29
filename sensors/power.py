@@ -4,7 +4,7 @@ import time
 import requests
 
 FOG_NODE_URL = "http://awseb-e-p-AWSEBLoa-IW5SKUJPCTP1-932418002.us-east-1.elb.amazonaws.com/sensor"
-SEND_INTERVAL_SECONDS = 2
+SEND_INTERVAL_SECONDS = 10
 
 def generate_power():
     voltage = random.uniform(210.0, 250.0)

@@ -84,7 +84,7 @@
 	"variable": [
 		{
 			"key": "api_url",
-			"value": "https://CHANGE_ME.execute-api.us-east-1.amazonaws.com/prod",
+			"value": "https://9xtw9d8g5m.execute-api.us-east-1.amazonaws.com/prod/energy",
 			"type": "string"
 		}
 	]

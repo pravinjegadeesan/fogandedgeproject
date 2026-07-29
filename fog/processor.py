@@ -38,15 +38,15 @@ def add_reading(sensor_type, value):
     elif sensor_type == "power":
         power_buffer.append(value)
 
-    if (len(voltage_buffer) >= 5 and 
-        len(current_buffer) >= 5 and 
-        len(power_buffer) >= 5 and 
+    if (len(voltage_buffer) >= 1 and 
+        len(current_buffer) >= 1 and 
+        len(power_buffer) >= 1 and 
         latest_temp is not None and 
         latest_humidity is not None):
         
-        avg_voltage = round(sum(voltage_buffer[:5]) / 5, 2)
-        avg_current = round(sum(current_buffer[:5]) / 5, 2)
-        avg_power = round(sum(power_buffer[:5]) / 5, 2)
+        avg_voltage = round(voltage_buffer[0], 2)
+        avg_current = round(current_buffer[0], 2)
+        avg_power = round(power_buffer[0], 2)
         
         status = "High Energy Consumption" if avg_power > 3500 else "Normal"
         
@@ -59,8 +59,8 @@ def add_reading(sensor_type, value):
             "power": avg_power,
             "status": status
         }
-        del voltage_buffer[:5]
-        del current_buffer[:5]
-        del power_buffer[:5]
+        del voltage_buffer[:1]
+        del current_buffer[:1]
+        del power_buffer[:1]
         return payload
     return None
